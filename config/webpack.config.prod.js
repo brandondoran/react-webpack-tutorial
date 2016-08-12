@@ -112,6 +112,7 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
       favicon: paths.appFavicon,
+      chunksSortMode: 'dependency',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -127,7 +128,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor'],
+      names: ['vendor', 'manifest'],
       minChunks: Infinity
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
