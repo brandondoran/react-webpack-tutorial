@@ -37,6 +37,9 @@ Here are the tags in chronological order:
 - Use `CommonsChunkPlugin` to generate a seperate manifest.js including the Webpack runtime as well as the chunk mapping.
 - Configure [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) to order assets correctly in the production build.
 
+### `inline-manifest`
+- Use [inline-manifest-webpack-plugin](https://github.com/szrenwei/inline-manifest-webpack-plugin) to inline manifest.js in the html.
+
 ## Available Scripts
 
 In the project directory, you can run:

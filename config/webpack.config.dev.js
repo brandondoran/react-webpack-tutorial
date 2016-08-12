@@ -2,6 +2,7 @@ var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var paths = require('./paths');
 var vendor = require ('./vendor');
@@ -106,10 +107,13 @@ module.exports = {
       template: paths.appHtml,
       favicon: paths.appFavicon,
     }),
+    new InlineManifestWebpackPlugin({
+        name: 'webpackManifest'
+    }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
-      minChunks: Infinity
+        minChunks: Infinity
     }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
