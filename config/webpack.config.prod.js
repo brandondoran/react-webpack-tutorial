@@ -5,6 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 var paths = require('./paths');
+var vendor = require ('./vendor');
 
 var homepagePath = require(paths.appPackageJson).homepage;
 var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/';
@@ -16,10 +17,16 @@ if (!publicPath.endsWith('/')) {
 module.exports = {
   bail: true,
   devtool: 'source-map',
-  entry: [
-    require.resolve('./polyfills'),
-    path.join(paths.appSrc, 'index')
-  ],
+  entry: {
+    vendor: [
+      require.resolve('./polyfills'),
+      ...vendor
+    ],
+    app: [
+      path.join(paths.appSrc, 'index')
+    ]
+  },
+
   output: {
     path: paths.appBuild,
     filename: 'static/js/[name].[chunkhash:8].js',
@@ -119,6 +126,10 @@ module.exports = {
       }
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor'],
+      minChunks: Infinity
+    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({

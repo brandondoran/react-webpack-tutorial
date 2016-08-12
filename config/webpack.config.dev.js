@@ -4,20 +4,31 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var paths = require('./paths');
+var vendor = require ('./vendor');
+
+var hotEntries = [
+  require.resolve('webpack-dev-server/client') + '?/',
+  require.resolve('webpack/hot/dev-server'),
+];
 
 module.exports = {
   devtool: 'eval',
-  entry: [
-    require.resolve('webpack-dev-server/client') + '?/',
-    require.resolve('webpack/hot/dev-server'),
-    require.resolve('./polyfills'),
-    path.join(paths.appSrc, 'index')
-  ],
+  entry: {
+    vendor: [
+      ...hotEntries,
+      require.resolve('./polyfills'),
+      ...vendor
+    ],
+    app: [
+      ...hotEntries,
+      path.join(paths.appSrc, 'index')
+    ]
+  },
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: paths.appBuild,
     pathinfo: true,
-    filename: 'static/js/bundle.js',
+    filename: 'static/js/[name].js',
     publicPath: '/'
   },
   resolve: {
@@ -96,6 +107,10 @@ module.exports = {
       favicon: paths.appFavicon,
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor'],
+      minChunks: Infinity
+    }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
     new CaseSensitivePathsPlugin()
