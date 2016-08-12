@@ -40,6 +40,9 @@ Here are the tags in chronological order:
 ### `inline-manifest`
 - Use [inline-manifest-webpack-plugin](https://github.com/szrenwei/inline-manifest-webpack-plugin) to inline manifest.js in the html.
 
+### `deterministic-modules`
+- Use Webpack NamedModulesPlugin to use deterministic module names instead of non-deterministic integer ids.
+
 ## Available Scripts
 
 In the project directory, you can run:

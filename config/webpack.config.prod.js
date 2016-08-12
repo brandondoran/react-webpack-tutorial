@@ -131,6 +131,7 @@ module.exports = {
         name: 'webpackManifest'
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
+    new webpack.NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
       minChunks: Infinity
