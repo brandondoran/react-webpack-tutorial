@@ -2,6 +2,9 @@ react-webpack-tutorial
 =====================
 An ejected [create-react-app](https://github.com/facebookincubator/create-react-app) application for demonstrating more advanced webpack configuration.
 
+
+Explanation in this blog: [Caching Assets Long Term with Webpack](https://medium.com/connect-the-dots/caching-assets-long-term-with-webpack-5ad24a4c39bd#.13ju8arot)
+
 ## Installation
 ```bash
 npm i
